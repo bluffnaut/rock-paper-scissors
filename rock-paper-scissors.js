@@ -15,9 +15,42 @@ case 2:
 
 
 // Variable to store the computer's choice
-// Expected output: Rock, Paper or Scissors
 let computerChoice = getComputerChoice(3);
-console.log(computerChoice);
+
+
+// Function to determine the winner of a round
+function playRound(humanChoice, computerChoice) {
+   
+   if (humanChoice === computerChoice) {
+      return "Tie!"
+   }
+   
+   if (humanChoice === "Rock") {
+    if (computerChoice === "Paper") {
+      return "You lose. Paper beats rock.";
+   } else {
+      return "You win! Rock beats scissors.";
+   }
+   }
+
+
+   if (humanChoice === "Paper") {
+    if (computerChoice === "Scissors") {
+      return "You lose. Scissors beats paper.";
+   } else {
+      return "You win! Paper beats rock.";
+   }
+   }
+
+   
+   if (humanChoice === "Scissors") {
+    if (computerChoice === "Rock") {
+      return "You lose. Rock beats scissors.";
+   } else {
+      return "You win! Scissors beats paper.";
+   }
+   }
+}
 
 
 // Function to get the user's choice for Rock Paper Scissors
@@ -27,12 +60,20 @@ function getHumanChoice() {
 }
 
 
-// Variable to store the user's choice
+// Variable to store the player's choice
 let humanChoice = getHumanChoice();
-console.log(humanChoice);
 
 
-// Variables to store the score of each player
+// Variables to store the current scores
 let humanScore = 0
 let computerScore = 0
 
+
+// Log the computer's choice
+// Expected output: Rock, Paper or Scissors
+console.log(computerChoice);
+
+// Log the player's choice
+console.log(humanChoice);
+
+console.log(playRound(humanChoice, computerChoice));
