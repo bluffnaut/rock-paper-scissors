@@ -1,3 +1,5 @@
+/* This comment deactivates all Javascript
+
 // Variables to store the current scores
 let humanScore = 0
 let computerScore = 0
