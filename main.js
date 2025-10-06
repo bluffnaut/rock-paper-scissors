@@ -1,9 +1,12 @@
-const gameOptions = ["rock", "paper", "scissors"];
-const winners = [];
+const handShapes = ["rock", "paper", "scissors"];
+
+let playerWins = 0;
+let computerWins = 0;
+let tieGames = 0;
 
 function playGame() {
    // This function plays five rounds of Rock, Paper, Scissors
-   for (let i = 1; i < 6; i++) {
+   for (let i = 1; i <= 5; i++) {
       playRound(i);
    }
    logWins();
@@ -13,30 +16,39 @@ function playRound(round) {
    const playerChoice = getPlayerChoice();
    const computerChoice = getComputerChoice();
    const winner = checkWinner(playerChoice, computerChoice);
-   winners.push(winner);
+
+   if (winner === 'Player') {
+      playerWins++;
+   } else if (winner === 'Computer') {
+      computerWins++;
+   } else {
+      tieGames++;
+   }
    logRound(playerChoice, computerChoice, winner, round)
 }
 
 function logWins() {
-   let playerWins = winners.filter((item) => item == 'Player').length;
-   let computerWins = winners.filter((item) => item == 'Computer').length;
-   let ties = winners.filter((item) => item == 'Tie').length;
    console.log('Results:');
    console.log('Player Wins:', playerWins);
    console.log('Computer Wins:', computerWins);
-   console.log('Ties', ties);
+   console.log('Ties', tieGames);
 }
 
 function logRound(playerChoice, computerChoice, winner, round) {
    console.log('Round:', round);
    console.log('Player Chose:', playerChoice);
    console.log('Computer Chose:', computerChoice);
-   console.log(winner, 'Won the Round');
+   
+   if (winner === 'Tie') {
+      console.log("It's a tie!");
+   } else {
+      console.log(winner, "won the round.");
+   }
    console.log("--------------------");
 }
 
 function getComputerChoice() {
-   return gameOptions[Math.floor(Math.random() * gameOptions.length)];
+   return handShapes[Math.floor(Math.random() * handShapes.length)];
 }
 
 function getPlayerChoice() {
@@ -60,7 +72,7 @@ function getPlayerChoice() {
 }
 
 function validateUserInput(userInput) {
-   return gameOptions.includes(userInput);
+   return handShapes.includes(userInput);
 }
 
 function checkWinner(playerChoice, computerChoice) {
