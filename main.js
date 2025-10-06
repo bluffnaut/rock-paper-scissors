@@ -1,78 +1,90 @@
-const choices = ["rock", "paper", "scissors"];
-const winners = [];
+const handShapes = ["rock", "paper", "scissors"];
 
-function game() {
-   for (let i = 1; i < 6; i++) {
+let playerWins = 0;
+let computerWins = 0;
+let tieGames = 0;
+
+function playGame() {
+   // This function plays five rounds of Rock, Paper, Scissors
+   for (let i = 1; i <= 5; i++) {
       playRound(i);
    }
-   document.querySelector('button').textContent = "Play new game"
    logWins();
 }
 
 function playRound(round) {
-   const playerSelection = playerChoice();
-   const computerSelection = computerChoice();
-   const winner = checkWinner(playerSelection, computerSelection);
-   winners.push(winner);
-   logRound(playerSelection, computerSelection, winner, round)
-}
+   const playerChoice = getPlayerChoice();
+   const computerChoice = getComputerChoice();
+   const winner = checkWinner(playerChoice, computerChoice);
 
-function playerChoice() {
-   let input = prompt('Type Rock, Paper, or Scissors');
-   while (input == null) {
-      input = prompt('Type Rock, Paper, or Scissors');
-   }
-   input = input.toLowerCase();
-   let check = validateInput(input);
-   while (check == false) {
-      input = prompt(
-         'Type Rock, Paper, or Scissors. Spelling needs to be exact.'
-      );
-      while (input == null) {
-      input = prompt('Type Rock, Paper, or Scissors');
-      }
-      input = input.toLowerCase()
-      check = validateInput(input);
-   }
-   return input;
-}
-
-function computerChoice() {
-   return choices[Math.floor(Math.random() * choices.length)];
-}
-
-function validateInput(choice) {
-   return choices.includes(choice);
-}
-
-function checkWinner(choiceP, choiceC) {
-   if (choiceP === choiceC) {
-      return "Tie";
-   } else if (
-      (choiceP === "rock" && choiceC === "scissors") || 
-      (choiceP === "paper" && choiceC === "rock") || 
-      (choiceP === "scissors" && choiceC === "paper")
-   ) {
-      return 'Player';
+   if (winner === 'Player') {
+      playerWins++;
+   } else if (winner === 'Computer') {
+      computerWins++;
    } else {
-      return 'Computer';
+      tieGames++;
    }
+   logRound(playerChoice, computerChoice, winner, round)
 }
 
 function logWins() {
-   let playerWins = winners.filter((item) => item == 'Player').length;
-   let computerWins = winners.filter((item) => item == 'Computer').length;
-   let ties = winners.filter((item) => item == 'Tie').length;
    console.log('Results:');
    console.log('Player Wins:', playerWins);
    console.log('Computer Wins:', computerWins);
-   console.log('Ties', ties);
+   console.log('Ties', tieGames);
 }
 
 function logRound(playerChoice, computerChoice, winner, round) {
    console.log('Round:', round);
    console.log('Player Chose:', playerChoice);
    console.log('Computer Chose:', computerChoice);
-   console.log(winner, 'Won the Round');
+   
+   if (winner === 'Tie') {
+      console.log("It's a tie!");
+   } else {
+      console.log(winner, "won the round.");
+   }
    console.log("--------------------");
+}
+
+function getComputerChoice() {
+   return handShapes[Math.floor(Math.random() * handShapes.length)];
+}
+
+function getPlayerChoice() {
+   let userInput = prompt('Type Rock, Paper, or Scissors');
+   while (userInput == null) {
+      userInput = prompt('Type Rock, Paper, or Scissors');
+   }
+   userInput = userInput.toLowerCase();
+   let check = validateUserInput(userInput);
+   while (check == false) {
+      userInput = prompt(
+         'Type Rock, Paper, or Scissors. Spelling needs to be exact.'
+      );
+      while (userInput == null) {
+      userInput = prompt('Type Rock, Paper, or Scissors');
+      }
+      userInput = userInput.toLowerCase()
+      check = validateUserInput(userInput);
+   }
+   return userInput;
+}
+
+function validateUserInput(userInput) {
+   return handShapes.includes(userInput);
+}
+
+function checkWinner(playerChoice, computerChoice) {
+   if (playerChoice === computerChoice) {
+      return "Tie";
+   } else if (
+      (playerChoice === "rock" && computerChoice === "scissors") || 
+      (playerChoice === "paper" && computerChoice === "rock") || 
+      (playerChoice === "scissors" && computerChoice === "paper")
+   ) {
+      return 'Player';
+   } else {
+      return 'Computer';
+   }
 }

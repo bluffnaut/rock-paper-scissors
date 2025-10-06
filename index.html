@@ -5,25 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rock Paper Scissors with UI</title>
   <link rel="stylesheet" href="styles.css">
-  <script src="rock-paper-scissors.js" defer></script>
+  <script src="main.js" defer></script>
 </head>
-<body>
 
-<div class="flex-container">
-  <h1>Rock Paper Scissors</h1>
-  <button onclick="game()">Start Game</button>
-  <p>This game is played in the console. For Mac, press fn and F12 to open the console.</p>
-</div>
+<body>
   <div class="score">
-    <h1 class="ties">Ties: 0</h1>
+    <h3 class="ties">Tie Games: 0</h3>
   </div>
   <div class="winnerDiv">
-    <h1 class="winner"></h1>
-    <button class="reset" onclick="resetGame()">Play Again?</button>
+    <h1 class="winner">Game Winner: </h1>
+    <button class="reset" onclick="playGame()">Start Game</button>
   </div>
   <div class="playerSection">
-    <h3 class="playerChoice"></h3>
-    <h3 class="playerScore">Score: 0</h3>
+    <h3 class="playerChoice">Player Choice: </h3>
+    <h3 class="playerScore">Player Score: 0</h3>
     <div class="playerImgs">
       <img src="./rps-ui images/rock.png" alt="rock" class="pImg" id="rock">
       <img src="./rps-ui images/paper.png" alt="paper" class="pImg" id="paper">
@@ -31,9 +26,9 @@
     </div>
   </div>
 
-    <div class="computerSection">
-    <h3 class="computerChoice"></h3>
-    <h3 class="computerScore">Score: 0</h3>
+  <div class="computerSection">
+    <h3 class="computerChoice">Computer Choice: </h3>
+    <h3 class="computerScore">Computer Score: 0</h3>
     <div class="computerImgs">
       <img src="./rps-ui images/rock.png" alt="rock" class="computerImg">
       <img src="./rps-ui images/paper.png" alt="paper" class="computerImg">
