@@ -3,17 +3,38 @@ const handShapes = ["rock", "paper", "scissors"];
 let playerWins = 0;
 let computerWins = 0;
 let tieGames = 0;
+let roundCount = 0;
 
-function playGame() {
-   // This function plays five rounds of Rock, Paper, Scissors
-   for (let i = 1; i <= 5; i++) {
-      playRound(i);
-   }
-   logWins();
+// The player clicks an image to select rock, paper, or scissors 
+const playerRockImage = document.querySelector("#rock");
+playerRockImage.addEventListener("click", e => {
+   handlePlayerChoice("rock");
+});
+
+// The player clicks an image to select rock, paper, or scissors
+const playerPaperImage = document.querySelector("#paper");
+playerPaperImage.addEventListener("click", e => {
+   handlePlayerChoice("paper");
+});
+
+// The player clicks an image to select rock, paper, or scissors
+const playerScissorsImage = document.querySelector("#scissors");
+playerScissorsImage.addEventListener("click", e => {
+   handlePlayerChoice("scissors");
+});
+
+// After clicking an image, "rock", "paper", or "scissors" is passed as an argument
+function handlePlayerChoice(playerChoice) {
+   playRound(playerChoice);
 }
 
-function playRound(round) {
-   const playerChoice = getPlayerChoice();
+function playRound(playerChoice) {
+   // This condition ensures that the game consists of 5 rounds
+   if (roundCount >= 5) {
+      console.log("Game over. Please refresh to play again.");
+      return;
+   }
+
    const computerChoice = getComputerChoice();
    const winner = checkWinner(playerChoice, computerChoice);
 
@@ -24,14 +45,31 @@ function playRound(round) {
    } else {
       tieGames++;
    }
-   logRound(playerChoice, computerChoice, winner, round)
+
+   roundCount++;
+   logRound(playerChoice, computerChoice, winner, roundCount);
+
+   if (roundCount === 5) {
+      logWins();
+   }
 }
 
-function logWins() {
-   console.log('Results:');
-   console.log('Player Wins:', playerWins);
-   console.log('Computer Wins:', computerWins);
-   console.log('Ties', tieGames);
+function getComputerChoice() {
+   return handShapes[Math.floor(Math.random() * handShapes.length)];
+}
+
+function checkWinner(playerChoice, computerChoice) {
+   if (playerChoice === computerChoice) {
+      return "Tie";
+   } else if (
+      (playerChoice === "rock" && computerChoice === "scissors") || 
+      (playerChoice === "paper" && computerChoice === "rock") || 
+      (playerChoice === "scissors" && computerChoice === "paper")
+   ) {
+      return 'Player';
+   } else {
+      return 'Computer';
+   }
 }
 
 function logRound(playerChoice, computerChoice, winner, round) {
@@ -47,44 +85,9 @@ function logRound(playerChoice, computerChoice, winner, round) {
    console.log("--------------------");
 }
 
-function getComputerChoice() {
-   return handShapes[Math.floor(Math.random() * handShapes.length)];
-}
-
-function getPlayerChoice() {
-   let userInput = prompt('Type Rock, Paper, or Scissors');
-   while (userInput == null) {
-      userInput = prompt('Type Rock, Paper, or Scissors');
-   }
-   userInput = userInput.toLowerCase();
-   let check = validateUserInput(userInput);
-   while (check == false) {
-      userInput = prompt(
-         'Type Rock, Paper, or Scissors. Spelling needs to be exact.'
-      );
-      while (userInput == null) {
-      userInput = prompt('Type Rock, Paper, or Scissors');
-      }
-      userInput = userInput.toLowerCase()
-      check = validateUserInput(userInput);
-   }
-   return userInput;
-}
-
-function validateUserInput(userInput) {
-   return handShapes.includes(userInput);
-}
-
-function checkWinner(playerChoice, computerChoice) {
-   if (playerChoice === computerChoice) {
-      return "Tie";
-   } else if (
-      (playerChoice === "rock" && computerChoice === "scissors") || 
-      (playerChoice === "paper" && computerChoice === "rock") || 
-      (playerChoice === "scissors" && computerChoice === "paper")
-   ) {
-      return 'Player';
-   } else {
-      return 'Computer';
-   }
+function logWins() {
+   console.log('Results:');
+   console.log('Player Wins:', playerWins);
+   console.log('Computer Wins:', computerWins);
+   console.log('Ties', tieGames);
 }
